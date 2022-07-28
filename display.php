@@ -63,39 +63,143 @@
                     <?php
                         
                         $qry = "SELECT * FROM `data`";
-                        $run = mysqli_query($con, $qry);
-                        
-
-
-                            while($total>0)
+                            $run = mysqli_query($con, $qry);
+                            
+                            $data = mysqli_fetch_assoc($run);
+                                            
+                            $original = array();
+                            $temp = array();
+                            for ($i = 0; $i < $total; $i++)
                             {
-                                for ( $i =1; $i <= $row; $i++ )
-                                {
-                                    echo "<tr>";
-                                    
-                                    for ($j = 1; $j <= $col; $j++)
-                                    {
-                                        echo "<td height=30px width=30px>";
+                                $original[$i] = $data['num'];
+                            }
+                            
+                            $length = sizeof($original);
+                            $temp = $original;   
+                            
+                            //echo $data['num'];
+                            //print_r($original);
+                            //print_r($temp);
 
-                                        $data = mysqli_fetch_assoc($run);
-                                        
-                                        if($data)
+
+                        while($total>0)
+                        {
+                            $index_num = 0;
+
+                            for ( $r = 1; $r < $row; $r++ )
+                            {
+                                echo "<tr>";
+                                
+                                for ($c = 1; $c < $col; $c++)
+                                {
+                                    echo "<td height=30px width=30px>";
+                                    
+                                    if ($r == 1 && $c == 1)
+                                    {
+                                        echo $temp[$index_num];
+                                    }
+
+                                    else if($r == 1 && $c > 1)
+                                    {
+                                        if($temp[$index_num] != $temp[$index_num-1])
                                         {
-                                            echo $data['num'];
+                                            echo $temp[$index_num];
                                         }
                                         else
                                         {
-                                            echo " ";
+                                            $t = 1;
+                                            $z = 0;
+                                            while ($z == 0)
+                                            {
+                                                while ($t < $total )
+                                                {
+                                                    if ($temp[$index_num-1] != $temp[$index_num+$t])
+                                                    {
+                                                        echo $temp[$index_num+$t];
+                                                        $z = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        $t++;
+                                                    }
+                                                }
+                                            }
                                         }
-
-                                        echo " </td>";
                                         
-                                        $total--;
+                                    }
+                                    else if($r > 1 && $c == 0)
+                                    {
+                                        if($temp[$index_num] != $temp[$index_num-$col])
+                                        {
+                                            echo $temp[$index_num];
+                                        }
+                                        else
+                                        {
+                                            $t = 1;
+                                            $z = 0;
+                                            while ($z == 0)
+                                            {
+                                                while ($t < $total )
+                                                {
+                                                    if ($temp[$index_num-$col] != $temp[$index_num+$t])
+                                                    {
+                                                        echo $temp[$index_num+$t];
+                                                        $z = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        $t++;
+                                                    }
+                                                }
+                                                
+                                            }
+                                        }
+                                        
+                                    }
+                                    else if($r > 1 && $c > 1)
+                                    {
+                                        if($temp[$index_num] != $temp[$index_num-1] && $temp[$index_num] != $temp[$index_num-$col])
+                                        {
+                                            echo $temp[$index_num];
+                                        }
+                                        else
+                                        {
+                                            $t = 1;
+                                            $z = 0;
+                                            while ($z == 0)
+                                            {
+                                                while ($t < $total )
+                                                {
+                                                    if ($temp[$index_num + $t] != $temp[$index_num-1] && $temp[$index_num + $t] != $temp[$index_num-$col])
+                                                    {
+                                                        echo $temp[$index_num+$t];
+                                                        $z = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        $t++;
+                                                    }
+
+                                                }
+                                                
+                                            }
+                                        }
+                                        
+                                    }
+                                    else
+                                    {
+                                        echo " ";
                                     }
 
-                                    echo "</tr>";
+                                    echo " </td>";
+                                    
+                                    $index_num++;
+                                    $total--;
                                 }
+
+                                echo "</tr>";
                             }
+                        }
  
                     ?>
                 </table>

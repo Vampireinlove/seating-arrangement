@@ -85,35 +85,104 @@
 
                                 while($total>0)
                                 {
-                                    for ( $o =1; $o <= $row; $o++ )
+                                    $index_num = 0;
+
+                                    for ( $r = 1; $r < $row; $r++ )
                                     {
                                         echo "<tr>";
                                         
-                                        for ($j = 0; $j <= $col; $j++)
+                                        for ($c = 1; $c < $col; $c++)
                                         {
                                             echo "<td height=30px width=30px>";
                                             
-                                            if ($o == 1 && $j > 0)
+                                            if ($r == 1 && $c == 1)
                                             {
-                                                if($temp[$j] != $temp[$j-1])
-                                                {
-                                                    echo $temp[$j];
-                                                }
+                                                echo $temp[$index_num];
                                             }
-                                            elseif($o > 1 && $j > 1)
+
+                                            else if($r == 1 && $c > 1)
                                             {
-                                                if($temp[$j] != $temp[$j-1] && $temp[$j] != $temp[$j-$col])
+                                                if($temp[$index_num] != $temp[$index_num-1])
                                                 {
-                                                    echo $temp[$j];
+                                                    echo $temp[$index_num];
                                                 }
+                                                else
+                                                {
+                                                    $t = 1;
+                                                    $z = 0;
+                                                    while ($z == 0)
+                                                    {
+                                                        if ($temp[$index_num-1] != $temp[$index_num+$t])
+                                                        {
+                                                            echo $temp[$index_num+$t];
+                                                            $z = 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            $t++;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                            }
+                                            else if($r > 1 && $c == 0)
+                                            {
+                                                if($temp[$index_num] != $temp[$index_num-$col])
+                                                {
+                                                    echo $temp[$index_num];
+                                                }
+                                                else
+                                                {
+                                                    $t = 1;
+                                                    $z = 0;
+                                                    while ($z == 0)
+                                                    {
+                                                        if ($temp[$index_num-$col] != $temp[$index_num+$t])
+                                                        {
+                                                            echo $temp[$index_num+$t];
+                                                            $z = 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            $t++;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                            }
+                                            else if($r > 1 && $c > 1)
+                                            {
+                                                if($temp[$index_num] != $temp[$index_num-1] && $temp[$index_num] != $temp[$index_num-$col])
+                                                {
+                                                    echo $temp[$index_num];
+                                                }
+                                                else
+                                                {
+                                                    $t = 1;
+                                                    $z = 0;
+                                                    while ($z == 0)
+                                                    {
+                                                        if ($temp[$index_num + $t] != $temp[$index_num-1] && $temp[$index_num + $t] != $temp[$index_num-$col])
+                                                        {
+                                                            echo $temp[$index_num+$t];
+                                                            $z = 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            $t++;
+                                                        }
+                                                    }
+                                                }
+                                                
                                             }
                                             else
                                             {
-                                                echo $temp[$j];
+                                                echo " ";
                                             }
 
                                             echo " </td>";
                                             
+                                            $index_num++;
                                             $total--;
                                         }
 
